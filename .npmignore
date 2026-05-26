@@ -15,12 +15,6 @@ appveyor.yml
 .travis.yaml
 appveyor.yaml
 
-# TypeScript sources and project configuration
-src/
-tsconfig.json
-tsconfig.*.json
-tsconfig.tsbuildinfo
-
 # ESLint configuration
 .eslintrc.json
 .eslintrc.js

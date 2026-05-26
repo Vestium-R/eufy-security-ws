@@ -18,6 +18,7 @@
 
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage",
     "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
+    "prepare": "tsc -p .",
     "build": "tsc -p .",
     "prepublishOnly": "rm -rf dist tsconfig.tsbuildinfo && npm run build",
     "build:ts": "tsc -p .",
