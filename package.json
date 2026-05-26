@@ -56,7 +56,7 @@
     "ansi-colors": "^4.1.3",
     "commander": "^14.0.0",
     "date-and-time": "^4.3.0",
-    "eufy-security-client": "3.8.0",
+    "eufy-security-client": "github:Vestium-R/eufy-security-client#feat/t85d0-smart-lock-c30",
     "fs-extra": "^11.2.0",
     "tslog": "^4.9.3",
     "ws": "^8.18.3"
