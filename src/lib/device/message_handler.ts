@@ -1,6 +1,7 @@
 import {
   CommandName,
   EufySecurity,
+  PropertyName,
   TalkbackStream,
 } from "eufy-security-client";
 
@@ -285,17 +286,21 @@ export class DeviceMessageHandler {
           };
         }
       }
-      case DeviceCommand.setProperty:
+      case DeviceCommand.setProperty: {
+        const propMsg = message as IncomingCommandDeviceSetProperty;
+        // setDeviceProperty throws NotSupportedError for the locked property on some lock
+        // models. Fall back to station.lockDevice() which handles all lock hardware types.
+        if (propMsg.name === PropertyName.DeviceLocked) {
+          station.lockDevice(device, propMsg.value as boolean);
+          return client.schemaVersion >= 13 ? { async: true } : {};
+        }
         await driver
-          .setDeviceProperty(
-            serialNumber,
-            (message as IncomingCommandDeviceSetProperty).name,
-            (message as IncomingCommandDeviceSetProperty).value,
-          )
+          .setDeviceProperty(serialNumber, propMsg.name, propMsg.value)
           .catch((error) => {
             throw error;
           });
         return client.schemaVersion >= 13 ? { async: true } : {};
+      }
       case DeviceCommand.startLivestream:
         if (client.schemaVersion >= 2) {
           if (!station.isLiveStreaming(device)) {
